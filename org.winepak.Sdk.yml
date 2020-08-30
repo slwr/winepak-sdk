@@ -1,11 +1,8 @@
-build-runtime: true
-
-id: org.winepak.Sdk
-id-platform: org.winepak.Platform
-branch: 3.0
+app-id: org.winepak.Wine32
+branch: '3.0'
 
 runtime: org.freedesktop.Platform
-runtime-version: 18.08
+runtime-version: '18.08'
 sdk: org.freedesktop.Sdk
 
 sdk-extensions:
@@ -13,69 +10,10 @@ sdk-extensions:
   - org.freedesktop.Sdk.Locale
   - org.freedesktop.Sdk.Docs
 
-platform-extensions:
-  - org.freedesktop.Platform.Locale
-
-inherit-sdk-extensions:
-  - org.freedesktop.Sdk.Extension
-
-inherit-extensions:
-  - org.freedesktop.Platform.GL
-  - org.freedesktop.Platform.Timezones
-  - org.freedesktop.Platform.GStreamer
-  - org.freedesktop.Platform.VAAPI.Intel
-
 add-extensions:
-  org.winepak.Sdk.Docs:
-    directory: share/runtime/docs
-    bundle: true
-    autodelete: true
-    no-autodownload: true
-
-  org.winepak.Sdk.Extension:
-    directory: lib/sdk
-    version: 3.0
-    subdirectories: true
-    autodelete: true
-    no-autodownload: true
-
-  org.winepak.Platform.Gecko:
-    directory: lib/gecko
-    version: 3.0
-    versions: 3.0
-    subdirectories: false
-    autodelete: false
-    no-autodownload: false
-
-  org.winepak.Platform.Mono:
-    directory: lib/mono
-    version: 3.0
-    versions: 3.0
-    subdirectories: false
-    autodelete: false
-    no-autodownload: false
-
-  org.winepak.Platform.Extension:
-    directory: lib/extension
-    version: 3.0
-    subdirectories: true
-    autodelete: true
-    no-autodownload: true
-
-  org.winepak.Platform.Compat.i386:
-    directory: lib/i386-linux-gnu
-    version: 3.0
-    autodelete: true
-    add-ld-path: .
-
-  org.winepak.Platform.Compat.i386.Debug:
-    directory: lib/debug/lib/i386-linux-gnu
-    version: 3.0
-    autodelete: true
-
   org.freedesktop.Platform.GL32:
-    directory: lib/i386-linux-gnu/lib/GL
-    version: 1.4
+    directory: lib/i386-linux-gnu/GL
+    version: '1.4'
     versions: 1.6;1.4
     add-ld-path: lib
     subdirectories: true
@@ -86,8 +24,6 @@ add-extensions:
     enable-if: active-gl-driver
 
 finish-args:
-  - --sdk=org.winepak.Sdk//3.0
-  - --runtime=org.winepak.Platform//3.0
   - --allow=multiarch
   - --env=PATH=/app/bin:/usr/bin:/usr/lib/i386-linux-gnu/wine/bin
   - --env=XDG_DATA_DIRS=/app/share:/usr/share:/usr/share/runtime/share:/run/host/share
@@ -99,28 +35,12 @@ cleanup:
   - /man
   - /share/man
 
-cleanup-commands:
-  - sh -x /usr/libexec/freedesktop-post.sh
-  - |
-    if [ -L /usr/lib/i386-linux-gnu ]; then
-      rm /usr/lib/i386-linux-gnu
-      mkdir -p /usr/lib/i386-linux-gnu
-    fi
-
-cleanup-platform:
+cleanup:
   - /docs
   - /include
   - /share/aclocal
   - /share/pkgconfig
   - /lib/pkgconfig
-
-cleanup-platform-commands:
-  - sh -x /usr/libexec/freedesktop-post.sh
-  - |
-    if [ -L /usr/lib/i386-linux-gnu ]; then
-      rm /usr/lib/i386-linux-gnu
-      mkdir -p /usr/lib/i386-linux-gnu
-    fi
 
 build-options:
   cflags: -O2 -g -fstack-protector-strong -D_FORTIFY_SOURCE=2
@@ -130,15 +50,6 @@ build-options:
     V: '1'
 
 modules:
-  - name: platform-setup
-    buildsystem: simple
-    build-commands:
-      - mkdir -p /usr/share/runtime/docs
-      - mkdir -p /usr/lib/sdk
-      - mkdir -p /usr/lib/extension
-      - mkdir -p /usr/lib/gecko
-      - mkdir -p /usr/lib/mono
-
   - name: openldap
     config-opts:
       - --disable-static
@@ -162,8 +73,8 @@ modules:
   - name: unrar
     buildsystem: simple
     build-commands:
-      - make
-      - make install
+      - make DESTDIR=/app
+      - make DESTDIR=/app install
     sources:
       - type: archive
         url: https://www.rarlab.com/rar/unrarsrc-5.6.4.tar.gz
@@ -233,30 +144,3 @@ modules:
       - type: archive
         url: https://dl.winehq.org/wine/source/3.0/wine-3.0.2.tar.xz
         sha256: cad771375409e24244eab252da044306158af8a8bea4432e7ca81c1dc6b463ff
-    post-install:
-      - rm -rf /usr/share/wine/gecko
-      - ln -s /usr/lib/gecko /usr/share/wine/gecko
-      - rm -rf /usr/share/wine/mono
-      - ln -s /usr/lib/mono /usr/share/wine/mono
-      - 
-      - mkdir -p /usr/lib/i386-linux-gnu/wine/bin
-      - |
-        for i in /usr/bin/wine*; do
-          mv $i /usr/lib/i386-linux-gnu/wine/bin
-          ln -s "/usr/lib/i386-linux-gnu/wine/bin/$(basename $i)" $i
-        done
-
-  - name: metainfo
-    buildsystem: simple
-    build-commands:
-      - mkdir -p /usr/share/appdata
-      - install org.winepak.Platform.appdata.xml /usr/share/appdata
-      - install org.winepak.Sdk.appdata.xml /usr/share/appdata
-      - appstream-compose --basename=org.winepak.Platform --prefix=/usr --origin=flatpak org.winepak.Platform
-      - appstream-compose --basename=org.winepak.Sdk --prefix=/usr --origin=flatpak org.winepak.Sdk
-    sources:
-      - type: file
-        path: org.winepak.Sdk.appdata.xml
-      - type: file
-        path: org.winepak.Platform.appdata.xml
-
