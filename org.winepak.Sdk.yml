@@ -100,8 +100,8 @@ modules:
       - /share/applications
     sources:
       - type: archive
-        url: https://dl.winehq.org/wine/source/3.0/wine-3.0.2.tar.xz
-        sha256: cad771375409e24244eab252da044306158af8a8bea4432e7ca81c1dc6b463ff
+        url: https://dl.winehq.org/wine/source/3.0/wine-3.0.5.tar.xz
+        sha256: dc429095b564abe45306b957f3f27d426fb37e365b4dee3ec8d61dc66e8ce211
 
   - name: platform-bootstrap
     buildsystem: simple
