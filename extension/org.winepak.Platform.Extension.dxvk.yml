@@ -1,10 +1,10 @@
 build-extension: true
 
 id: org.winepak.Platform.Extension.dxvk
-branch: 1.5.4
+branch: 1.8.1
 
 runtime: org.winepak.Platform
-runtime-version: 5.0
+runtime-version: '6.8'
 sdk: org.winepak.Sdk
 
 separate-locales: false
@@ -31,8 +31,8 @@ modules:
       - install -D x64/dxgi.dll ${FLATPAK_DEST}/dlls/x64/
     sources:
       - type: archive
-        url: https://github.com/doitsujin/dxvk/releases/download/v1.5.4/dxvk-1.5.4.tar.gz
-        sha256: 8e4fd15525def9bcaa9cc1b4496f76a2664ba4806b02a5ac0eddd703d7bbdea7
+        url: https://github.com/doitsujin/dxvk/releases/download/v1.8.1/dxvk-1.8.1.tar.gz
+        sha256: 54c0131d44c8b86b8cc9cd55163edde0c94d23623a5647145fc21133bf13e832
 
   - name: scripts
     buildsystem: simple

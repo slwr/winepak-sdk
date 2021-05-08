@@ -2,17 +2,17 @@ build-runtime: true
 
 id: org.winepak.Sdk
 id-platform: org.winepak.Platform
-branch: '5.0'
+branch: '6.8'
 
 runtime: org.freedesktop.Platform
-runtime-version: '19.08'
+runtime-version: '20.08'
 sdk: org.freedesktop.Sdk
 
 add-extensions:
   org.winepak.Platform.Compat32:
     directory: lib/32bit
-    version: '5.0'
-    versions: '5.0'
+    version: '6.8'
+    versions: '6.8'
     add-ld-path: lib
     subdirectories: false
     autodelete: false
@@ -20,8 +20,8 @@ add-extensions:
 
   org.freedesktop.Platform.GL32:
     directory: lib/32bit/lib/GL
-    version: '19.08'
-    versions: '19.08;1.6;1.4'
+    version: '20.08'
+    versions: '20.08;19.08;1.6;1.4'
     subdirectories: true
     no-autodownload: true
     autodelete: false
@@ -32,22 +32,22 @@ add-extensions:
 
   org.winepak.Platform.Wine:
     directory: lib/wine
-    version: '5.0'
-    versions: '5.0'
+    version: '6.8'
+    versions: '6.8'
     add-ld-path: lib
     subdirectories: false
     autodelete: false
 
   org.winepak.Platform.Extension:
     directory: lib/extension
-    version: '5.0'
+    version: '6.8'
     subdirectories: true
     autodelete: true
     no-autodownload: true
 
   org.winepak.Sdk.Extension:
     directory: lib/sdk
-    version: '5.0'
+    version: '6.8'
     subdirectories: true
     autodelete: true
     no-autodownload: true
@@ -63,8 +63,8 @@ inherit-extensions:
   - org.freedesktop.Sdk.Extension
 
 finish-args:
-  - --sdk=org.winepak.Sdk//5.0
-  - --runtime=org.winepak.Platform//5.0
+  - --sdk=org.winepak.Sdk//6.8
+  - --runtime=org.winepak.Platform//6.8
   - --allow=multiarch
   - --env=PATH=/app/bin:/app/lib/wine/bin:/app/lib/wine-32bit/bin:/app/lib/32bit/wine:/usr/lib/wine/bin:/usr/lib/wine-32bit/bin:/usr/bin:/usr/lib/32bit/bin
   - --env=XDG_DATA_DIRS=/app/share:/usr/share:/usr/share/runtime/share:/run/host/share
@@ -113,8 +113,8 @@ modules:
       # FTP isn't support in flatpak & flatpak-builder so we use he https mirror
       # https://www.openldap.org/software/download/OpenLDAP/openldap-release/
       - type: archive
-        url: https://www.openldap.org/software/download/OpenLDAP/openldap-release/openldap-2.4.48.tgz
-        sha256: d9523ffcab5cd14b709fcf3cb4d04e8bc76bb8970113255f372bc74954c6074d
+        url: https://www.openldap.org/software/download/OpenLDAP/openldap-release/openldap-2.4.58.tgz
+        sha256: 57b59254be15d0bf6a9ab3d514c1c05777b02123291533134a87c94468f8f47b
 
   - name: wine-win64
     only-arches:
@@ -145,8 +145,8 @@ modules:
       - /share/applications
     sources:
       - type: archive
-        url: https://dl.winehq.org/wine/source/5.0/wine-5.0.tar.xz
-        sha256: 181550ba69a80b00c631f80c28ff7642264613bbecdb0c0fc04d6534866713b4
+        url: https://dl.winehq.org/wine/source/6.x/wine-6.8.tar.xz
+        sha256: 5b422dde67d8412871152ce315875efb494507ad38a0f4d710f13938a769ebd8
 
   - name: wine-win32
     only-arches:
@@ -179,8 +179,8 @@ modules:
       - /share/applications
     sources:
       - type: archive
-        url: https://dl.winehq.org/wine/source/5.0/wine-5.0.tar.xz
-        sha256: 181550ba69a80b00c631f80c28ff7642264613bbecdb0c0fc04d6534866713b4
+        url: https://dl.winehq.org/wine/source/6.x/wine-6.8.tar.xz
+        sha256: 5b422dde67d8412871152ce315875efb494507ad38a0f4d710f13938a769ebd8
 
   - name: wine-gecko
     buildsystem: simple
@@ -204,8 +204,8 @@ modules:
     no-make-install: true
     sources:
     - type: file
-      url: https://dl.winehq.org/wine/wine-mono/4.9.4/wine-mono-4.9.4.msi
-      sha256: 51a6ff38323fcda71d70ead90c252b5eaeacec542ba737dbd1d676787b210fdd
+      url: https://dl.winehq.org/wine/wine-mono/6.1.1/wine-mono-6.1.1-x86.msi
+      sha256: ac3b14beafde34b8482287e597000113dc06a915f32c9fd06c77eb819079e38b
 
   - name: cabextract
     buildsystem: autotools
@@ -217,8 +217,8 @@ modules:
       - /share/man
     sources:
       - type: archive
-        url: https://www.cabextract.org.uk/cabextract-1.6.tar.gz
-        sha256: cee661b56555350d26943c5e127fc75dd290b7f75689d5ebc1f04957c4af55fb
+        url: https://www.cabextract.org.uk/cabextract-1.9.1.tar.gz
+        sha256: afc253673c8ef316b4d5c29cc4aa8445844bee14afffbe092ee9469405851ca7
 
   - name: winetricks
     buildsystem: simple
@@ -227,8 +227,8 @@ modules:
       - make install
     sources:
       - type: archive
-        url: https://github.com/Winetricks/winetricks/archive/20191224.tar.gz
-        sha256: c1223bb90e76c468f15784a701696a184aaee802bc9c236797166dea33d0d0a2
+        url: https://github.com/Winetricks/winetricks/releases/download/20210206/20210206.tar.gz
+        sha256: 705421798b28696f577104ebdf03b068b9343ab096754150f47a6ec06fa8ae65
       - type: patch
         path: patch/winetricks.Makefile.patch
 

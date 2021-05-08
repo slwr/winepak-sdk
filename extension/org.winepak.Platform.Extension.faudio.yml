@@ -1,10 +1,10 @@
 build-extension: true
 
 id: org.winepak.Platform.Extension.faudio
-branch: 20.01
+branch: '20.07'
 
 runtime: org.winepak.Platform
-runtime-version: 5.0
+runtime-version: '6.8'
 sdk: org.winepak.Sdk
 
 separate-locales: false
@@ -52,8 +52,8 @@ modules:
       - install -D x64/xaudio2_9.dll ${FLATPAK_DEST}/dlls/x64/
     sources:
       - type: archive
-        url: https://github.com/Kron4ek/FAudio-Builds/releases/download/20.01/faudio-20.01.tar.xz
-        sha256: b845c9c492e32648dee44d058c189eff8534e5490a80a3b2a921248bc72e33bd
+        url: https://github.com/Kron4ek/FAudio-Builds/releases/download/20.07/faudio-20.07.tar.xz
+        sha256: 0b8a829b2450647cbc711ca8d0343e6f83cf5d87c5b49b1f5ed1d734c5b6278d
 
   - name: scripts
     buildsystem: simple
