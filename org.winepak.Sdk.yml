@@ -235,9 +235,8 @@ modules:
   - name: metainfo
     buildsystem: simple
     build-commands:
-      - mkdir -p /usr/share/appdata
-      - install org.winepak.Platform.appdata.xml /usr/share/appdata
-      - install org.winepak.Sdk.appdata.xml /usr/share/appdata
+      - install -D --target-directory=/usr/share/appdata/ org.winepak.Platform.appdata.xml
+      - install -D --target-directory=/usr/share/appdata/ org.winepak.Sdk.appdata.xml
       - appstream-compose --basename=org.winepak.Platform --prefix=/usr --origin=flatpak org.winepak.Platform
       - appstream-compose --basename=org.winepak.Sdk --prefix=/usr --origin=flatpak org.winepak.Sdk
     sources:
