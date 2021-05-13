@@ -265,6 +265,8 @@ modules:
       - type: archive
         url: https://github.com/Winetricks/winetricks/archive/20191224.tar.gz
         sha256: c1223bb90e76c468f15784a701696a184aaee802bc9c236797166dea33d0d0a2
+      - type: patch
+        path: patch/winetricks.Makefile.patch
 
   - name: metainfo
     buildsystem: simple

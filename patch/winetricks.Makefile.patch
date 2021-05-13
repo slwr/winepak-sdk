@@ -1,0 +1,11 @@
+--- a/Makefile	2021-02-06 21:45:09.000000000 +0100
++++ b/Makefile	2021-05-13 18:57:00.380897956 +0200
+@@ -52,8 +52,6 @@
+ install:
+ 	$(INSTALL) -d $(DESTDIR)$(PREFIX)/bin
+ 	$(INSTALL_PROGRAM) src/winetricks $(DESTDIR)$(PREFIX)/bin/winetricks
+-	$(INSTALL) -d $(DESTDIR)$(PREFIX)/share/man/man1
+-	$(INSTALL_DATA) src/winetricks.1 $(DESTDIR)$(PREFIX)/share/man/man1/winetricks.1
+ 	$(INSTALL) -d $(DESTDIR)$(PREFIX)/share/applications
+ 	$(INSTALL_DATA) src/winetricks.desktop $(DESTDIR)$(PREFIX)/share/applications/winetricks.desktop
+ 	$(INSTALL) -d $(DESTDIR)$(PREFIX)/share/metainfo
