@@ -7,10 +7,10 @@ set -e
     flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
     flatpak remote-add --user --if-not-exists freedesktop-sdk https://releases.freedesktop-sdk.io/freedesktop-sdk.flatpakrepo
 
-    for runtime in org.freedesktop.Platform/x86_64/1.6 \
-                   org.freedesktop.Platform/i386/1.6 \
-                   org.freedesktop.Sdk/x86_64/1.6 \
-                   org.freedesktop.Sdk/i386/1.6; do
+    for runtime in org.freedesktop.Platform/x86_64/19.08 \
+                   org.freedesktop.Platform/i386/19.08 \
+                   org.freedesktop.Sdk/x86_64/19.08 \
+                   org.freedesktop.Sdk/i386/19.08; do
         flatpak install --user --assumeyes flathub "$runtime" \
             || flatpak install --user --assumeyes freedesktop-sdk "$runtime"
     done
