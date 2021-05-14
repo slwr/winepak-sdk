@@ -173,7 +173,10 @@ modules:
       - --without-pcap
       - --without-udev
       - --without-v4l
+      - --docdir=/share/doc
+      - --mandir=/share/man
     cleanup:
+      - /share/doc
       - /share/man
       - /share/applications
     sources:
@@ -202,9 +205,12 @@ modules:
       - --without-pcap
       - --without-udev
       - --without-v4l
+      - --docdir=/share/doc
+      - --mandir=/share/man
     cleanup:
       - /bin/function_grep.pl
       - /include
+      - /share/doc
       - /share/man
       - /share/applications
     sources:
