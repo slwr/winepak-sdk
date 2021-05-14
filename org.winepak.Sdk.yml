@@ -245,6 +245,12 @@ modules:
 
   - name: cabextract
     buildsystem: autotools
+    config-opts:
+      - --docdir=/share/doc
+      - --mandir=/share/man
+    cleanup:
+      - /share/doc
+      - /share/man
     sources:
       - type: archive
         url: https://www.cabextract.org.uk/cabextract-1.9.1.tar.gz
