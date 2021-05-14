@@ -136,37 +136,21 @@ modules:
   - name: openldap
     config-opts:
       - --disable-static
+      - --disable-bdb
+      - --disable-hdb
+      - --enable-mdb
+      - --docdir=/share/doc
+      - --mandir=/share/man
+    cleanup:
+      - /share/doc
+      - /share/man
     sources:
       # OpenLDAP required for Wine
-      # Due to the licencing of BDB v6.* we must stick with OpenLDAP 2.4.46
       # FTP isn't support in flatpak & flatpak-builder so we use he https mirror
       # https://www.openldap.org/software/download/OpenLDAP/openldap-release/
       - type: archive
-        url: https://www.openldap.org/software/download/OpenLDAP/openldap-release/openldap-2.4.46.tgz
-        sha256: 9a90dcb86b99ae790ccab93b7585a31fbcbeec8c94bf0f7ab0ca0a87ea0c4b2d
-    modules:
-      - name: BDB
-        config-opts:
-          - --enable-compat185
-          - --enable-shared
-          - --enable-static
-          - --enable-cxx
-          - --enable-dbm
-          - --enable-stl
-        make-install-args:
-          - LIBSO_LIBS=-lpthread
-        sources:
-            # Bereley DB required for OpenLDAP
-            # Due to licencing v6.* will not work with later versions of OpenLDAP
-            # and for that matter a lot of other software. Stick to v5.3.28
-            # http://www.oracle.com/technetwork/products/berkeleydb/downloads/index-082944.html
-          - type: archive
-            url: http://download.oracle.com/berkeley-db/db-5.3.28.tar.gz
-            sha256: e0a992d740709892e81f9d93f06daf305cf73fb81b545afe72478043172c3628
-          - type: script
-            dest-filename: configure
-            commands:
-            - "./dist/configure $@"
+        url: https://www.openldap.org/software/download/OpenLDAP/openldap-release/openldap-2.4.48.tgz
+        sha256: d9523ffcab5cd14b709fcf3cb4d04e8bc76bb8970113255f372bc74954c6074d
 
   - name: wine-win64
     only-arches:
