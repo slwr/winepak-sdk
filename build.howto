@@ -1,0 +1,22 @@
+#!/bin/bash
+set -e
+
+(
+    cd "$(dirname "${BASH_SOURCE[0]}")" || exit
+
+    flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+    flatpak remote-add --user --if-not-exists freedesktop-sdk https://releases.freedesktop-sdk.io/freedesktop-sdk.flatpakrepo
+
+    for runtime in org.freedesktop.Platform/x86_64/1.6 \
+                   org.freedesktop.Platform/i386/1.6 \
+                   org.freedesktop.Sdk/x86_64/1.6 \
+                   org.freedesktop.Sdk/i386/1.6; do
+        flatpak install --user --assumeyes flathub "$runtime" \
+            || flatpak install --user --assumeyes freedesktop-sdk "$runtime"
+    done
+    flatpak update --user --assumeyes --subpath= org.freedesktop.Platform.Locale
+
+    flatpak-builder -v --arch=x86_64 --ccache --keep-build-dirs --force-clean --repo="${WINEPAK_REPO_LOCAL:-./winepak}" builds/winepak-sdk-images-x86_64 org.winepak.Sdk.yml
+    flatpak-builder -v --arch=i386 --ccache --keep-build-dirs --force-clean --repo="${WINEPAK_REPO_LOCAL:-./winepak}" builds/winepak-sdk-images-i386 org.winepak.Sdk.yml
+
+) 2>&1 | tee build.log
